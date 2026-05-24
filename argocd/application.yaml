@@ -10,7 +10,7 @@ spec:
 
   source:
     repoURL: https://github.com/abhishekyashpal/API.git
-    targetRevision: master
+    targetRevision: HEAD
     path: apps/node-api/overlays/production
 
   destination:
