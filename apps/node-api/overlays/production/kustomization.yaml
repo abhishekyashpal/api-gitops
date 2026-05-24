@@ -12,4 +12,4 @@ patchesStrategicMerge:
 
 images:
   - name: developerkingabhi/api-project
-    newTag: v1.0.0
+    newTag: latest
