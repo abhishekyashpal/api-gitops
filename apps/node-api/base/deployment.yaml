@@ -20,7 +20,7 @@ spec:
       containers:
         - name: node-api
 
-          image: developerkingabhi/api-project:v1.0.2
+          image: developerkingabhi/api-project@sha256:aa33ab5b0c652e03e8fc28d891f6976e7984cfd0a22f8d2153f6b70f68253dc0
 
           imagePullPolicy: Always
 
