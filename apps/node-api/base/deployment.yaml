@@ -20,7 +20,7 @@ spec:
       containers:
         - name: node-api
 
-          image: developerkingabhi/api-project:latest
+          image: developerkingabhi/api-project:v1.0.2
 
           imagePullPolicy: Always
 
