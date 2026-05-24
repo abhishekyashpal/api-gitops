@@ -11,7 +11,7 @@ spec:
   source:
     repoURL: https://github.com/abhishekyashpal/API.git
     targetRevision: master
-    path: apps/overlays/production
+    path: apps/node-api/overlays/production
 
   destination:
     server: https://kubernetes.default.svc
