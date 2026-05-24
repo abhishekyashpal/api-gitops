@@ -1,0 +1,10 @@
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: GitRepository
+metadata:
+  name: webapp-repo
+  namespace: flux-system
+spec:
+  interval: 1m
+  # Set this to your Git repository URL (replace with your org/repo)
+  url: https://github.com/your-org/your-repo.git
+  branch: main

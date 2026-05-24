@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+
+metadata:
+  name: node-api
+  namespace: argocd
+
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/abhishekyashpal/API.git
+    targetRevision: main
+    path: apps/overlays/production
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: node-api-production
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+
+    syncOptions:
+      - CreateNamespace=true
