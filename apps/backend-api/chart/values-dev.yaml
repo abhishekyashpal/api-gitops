@@ -35,7 +35,7 @@ ingress:
   className: nginx
   annotations: {}
   hosts:
-    - host: api.52.22.50.165.sslip.io
+    - host: api.**.**.**.***.sslip.io
       paths:
         - path: /
           pathType: Prefix
