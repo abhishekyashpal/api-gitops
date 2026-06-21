@@ -31,11 +31,11 @@ deployment:
       maxUnavailable: 0
 
 ingress:
-  enabled: false
+  enabled: true
   className: nginx
   annotations: {}
   hosts:
-    - host: backend-api-dev.local
+    - host: api.52.22.50.165.sslip.io
       paths:
         - path: /
           pathType: Prefix
@@ -55,5 +55,4 @@ podDisruptionBudget:
 networkPolicy:
   enabled: false
   ingressNamespace: ingress-nginx
-
 
