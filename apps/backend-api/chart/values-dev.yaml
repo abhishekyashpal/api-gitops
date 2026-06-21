@@ -1,0 +1,59 @@
+replicaCount: 1
+
+image:
+  repository: developerkingabhi/api-project
+  tag: v1.0.2
+  pullPolicy: IfNotPresent
+
+podLabels:
+  app.kubernetes.io/component: api
+  app.kubernetes.io/part-of: backend-api
+  app.kubernetes.io/environment: dev
+
+env:
+  NODE_ENV: development
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    cpu: 250m
+    memory: 256Mi
+
+deployment:
+  revisionHistoryLimit: 3
+  minReadySeconds: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+
+ingress:
+  enabled: false
+  className: nginx
+  annotations: {}
+  hosts:
+    - host: backend-api-dev.local
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 3
+  targetCPUUtilizationPercentage: 75
+  targetMemoryUtilizationPercentage: 85
+
+podDisruptionBudget:
+  enabled: false
+  minAvailable: 1
+
+networkPolicy:
+  enabled: false
+  ingressNamespace: ingress-nginx
+
+

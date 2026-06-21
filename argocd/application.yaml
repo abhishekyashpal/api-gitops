@@ -2,8 +2,11 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 
 metadata:
-  name: node-api
+  name: backend-api-dev
   namespace: argocd
+  labels:
+    app.kubernetes.io/name: backend-api
+    app.kubernetes.io/environment: dev
 
 spec:
   project: default
@@ -11,16 +14,122 @@ spec:
   source:
     repoURL: https://github.com/abhishekyashpal/api-gitops.git
     targetRevision: master
-    path: apps/node-api/overlays/production
+    path: apps/backend-api/chart
+    helm:
+      releaseName: backend-api-dev
+      valueFiles:
+        - values.yaml
+        - values-dev.yaml
 
   destination:
     server: https://kubernetes.default.svc
-    namespace: node-api-production
+    namespace: backend-api-dev
 
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
+      allowEmpty: false
 
     syncOptions:
       - CreateNamespace=true
+      - PruneLast=true
+      - ApplyOutOfSyncOnly=true
+      - Validate=true
+      - ServerSideApply=true
+
+    managedNamespaceMetadata:
+      labels:
+        app.kubernetes.io/name: backend-api
+        app.kubernetes.io/environment: dev
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+
+metadata:
+  name: backend-api-test
+  namespace: argocd
+  labels:
+    app.kubernetes.io/name: backend-api
+    app.kubernetes.io/environment: test
+
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/abhishekyashpal/api-gitops.git
+    targetRevision: master
+    path: apps/backend-api/chart
+    helm:
+      releaseName: backend-api-test
+      valueFiles:
+        - values.yaml
+        - values-test.yaml
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: backend-api-test
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: false
+
+    syncOptions:
+      - CreateNamespace=true
+      - PruneLast=true
+      - ApplyOutOfSyncOnly=true
+      - Validate=true
+      - ServerSideApply=true
+
+    managedNamespaceMetadata:
+      labels:
+        app.kubernetes.io/name: backend-api
+        app.kubernetes.io/environment: test
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+
+metadata:
+  name: backend-api-production
+  namespace: argocd
+  labels:
+    app.kubernetes.io/name: backend-api
+    app.kubernetes.io/environment: production
+
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/abhishekyashpal/api-gitops.git
+    targetRevision: master
+    path: apps/backend-api/chart
+    helm:
+      releaseName: backend-api-production
+      valueFiles:
+        - values.yaml
+        - values-production.yaml
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: backend-api-production
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: false
+
+    syncOptions:
+      - CreateNamespace=true
+      - PruneLast=true
+      - ApplyOutOfSyncOnly=true
+      - Validate=true
+      - ServerSideApply=true
+
+    managedNamespaceMetadata:
+      labels:
+        app.kubernetes.io/name: backend-api
+        app.kubernetes.io/environment: production
+
